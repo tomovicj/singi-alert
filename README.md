@@ -19,7 +19,9 @@ Singi alert is python script used to send a discord message thru webhook when a 
 
 ## Installation
 `git clone https://github.com/tomovicj/singi-alert.git`
+
 `cd singi-alert/`
+
 `pip install -r requirements.txt`
 
 ## Configuration
