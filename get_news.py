@@ -2,17 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def getNews(url):
+def get_news(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     # Get all news on the web site
-    newsList = soup.findAll("div", class_="news-item")
+    news_list = soup.findAll("div", class_="news-item")
 
     # Last news in the array is always the archived news (used to open news archive)
-    newsList.pop()
+    news_list.pop()
 
-    newsDataList = []
-    for news in newsList:
+    news_data_list = []
+    for news in news_list:
         # Extract all needed data
         title = news.find("a", class_="news-item-title").text
         description = news.find("div", class_="news-item-excerpt").text
@@ -20,7 +20,7 @@ def getNews(url):
         img = news.img.get("src")
         datetime = news.find("meta", itemprop="datePublished")["content"]
 
-        newsDataList.append({
+        news_data_list.append({
             "title": title.strip(),
             "description": description.strip() + "...",
             "img": img,
@@ -28,4 +28,4 @@ def getNews(url):
             "datetime": datetime
         })
 
-    return newsDataList
+    return news_data_list
