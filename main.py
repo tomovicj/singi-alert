@@ -1,5 +1,5 @@
-from getNews import getNews
-from validateNews import validateNews
+from get_news import get_news
+from validate_news import validate_news
 from notify import notify
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -14,9 +14,9 @@ if __name__ == "__main__":
         exit()
 
     # Get all available news from the given Singidunum site
-    news = getNews(os.environ.get("SINGIDUNUM_SITE_URL"))
+    all_news = get_news(os.environ.get("SINGIDUNUM_SITE_URL"))
     # Filter out old news
-    validatedNews = validateNews(news, os.environ.get("LAST_FILE_PATH"))
-    if (validatedNews):
-        # Send notifications about the new news if any
-        notify(validatedNews, os.environ.get("DISCORD_WEBHOOK"))
+    new_news_list = validate_news(all_news, os.environ.get("LAST_FILE_PATH"))
+
+    # Send notifications about the new news if any
+    notify(new_news_list)

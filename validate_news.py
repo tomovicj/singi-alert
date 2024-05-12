@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def validateNews(newsList, file):
+def validate_news(newsList, file):
     try:
         with open(file, "r") as f:
             # Load datetime of last known news from the file

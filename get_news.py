@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def getNews(url):
+def get_news(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     # Get all news on the web site

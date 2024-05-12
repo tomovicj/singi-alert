@@ -1,13 +1,31 @@
 from datetime import datetime
 import json
 import requests
+from dotenv import load_dotenv, find_dotenv
+import os
+
+load_dotenv(find_dotenv())
 
 
-def notify(newsList, webhook):
-    for news in newsList:
+def notify(news_list):
+    def notify_ntfy(news, ntfy_webhook):
+        try:
+            requests.post(ntfy_webhook,
+            data=news["description"].encode('utf-8'),
+            headers={
+                "Title": news["title"].encode('utf-8'),
+                "Attach": news["img"],
+                "Click": news["url"]
+            })
+        except:
+            print("Failed to send a ntfy message.\n")
+        else:
+            print("Ntfy message sent successfully!\n")
+
+
+    def notify_discord(news, discord_webhook):
         # Create a datatime object
         date = datetime.strptime(news["datetime"], "%Y-%m-%d %H:%M:%S")
-
         # Notification data
         data = {
             "content": None,
@@ -40,12 +58,25 @@ def notify(newsList, webhook):
             "Content-Type": "application/json"
         }
 
-        # Send a POST request to the webhook URL
-        response = requests.post(webhook, data=jsonData, headers=headers)
-
-        # Check the response status
-        if response.status_code == 204:
-            print("Message sent successfully!")
+        try:
+            # Send a POST request to the webhook URL
+            response = requests.post(discord_webhook, data=jsonData, headers=headers)
+            
+            # Check the response status code
+            if (response.status_code != 204):
+                raise Exception(response)
+        except:
+            print("Failed to send a discord message. Status code:", response.status_code, "\n")
+            print("Response:", response.text, "\n")
         else:
-            print("Failed to send message. Status code:", response.status_code)
-            print("Response:", response.text)
+            print("Discord message sent successfully!\n")
+
+
+    ntfy_url = os.environ.get("NTFY_URL")
+    discord_webhook = os.environ.get("DISCORD_WEBHOOK")
+    for news in news_list:
+        if ntfy_url:
+            notify_ntfy(news, ntfy_url)
+
+        if discord_webhook:
+            notify_discord(news, discord_webhook)

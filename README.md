@@ -1,5 +1,5 @@
 # Singi Alert
-Singi alert is python script used to send a discord message thru webhook when a new news post releases on [Singidunum University web site](https://singidunum.ac.rs/) or on one of their faculty websites.
+Singi alert is python script used to send a [discord](https://discord.com/) message or [ntfy](https://ntfy.sh/) notification when a news post releases on [Singidunum University website](https://singidunum.ac.rs/) or on one of their faculty websites.
 
 **DISCLAMER: This project is a third-party development and is not affiliated with or endorsed by the university administration. The purpose of this project is solely for educational and informational purposes. Any actions or consequences resulting from the use of this project are the sole responsibility of the user.**
 
@@ -28,7 +28,7 @@ Singi alert is python script used to send a discord message thru webhook when a 
 1. Rename `example.env` to the `.env`
 2. Open `.env` file
 3. Edit the Singidunum website you wish to receive news from
-4. Enter your [discord webhook](https://discord.com/developers/docs/resources/webhook)
+4. Enter your [discord webhook](https://discord.com/developers/docs/resources/webhook) and/or [ntfy](https://ntfy.sh/) link
 5. Save file
 6. Run the script with `python main.py`
 
